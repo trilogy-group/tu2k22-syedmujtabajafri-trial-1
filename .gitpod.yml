@@ -9,7 +9,7 @@ tasks:
 
   - name: "script2"
   - init: gp sync-await bundle
-    command: >
+    command: |
       curl -XPOST -H "Content-type: application/json" -d '{"a": 30, "b": "12"}' 'http://localhost:8080/sum/'
       echo "server2 script execution successful"
     openMode: split-right
