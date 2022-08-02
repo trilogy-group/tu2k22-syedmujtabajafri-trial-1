@@ -1,5 +1,5 @@
 name: Docker Compose Actions Workflow
-on: [workflow_dispatch]
+on: [workflow_dispatch, push]
 jobs:
   test:
     runs-on: ubuntu-latest
