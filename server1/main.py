@@ -1,4 +1,5 @@
-from fastapi import FastAPI, Request
+import requests
+from fastapi import FastAPI
 from pydantic import BaseModel
 
 app = FastAPI()
@@ -10,16 +11,14 @@ class Item(BaseModel):
 
 @app.get("/")
 async def root():
-    return {"message45": "Hello World"}
+    return {"message": "Hello World"}
 
 @app.get("/welcome")
 async def validate(name: str = ""):
-    return {"message222": "Welcome " + name}
+    return {"message": "Welcome " + name}
 
 @app.post("/sum/")
 async def sum(item: Item):
-    print(item.a)
-    print(item.b)
-    return {
-        "sum": "1"
-    }
+    # send request to server2
+    response = requests.post("http://server-2:8081/sum/", json={"a": item.a, "b": item.b})
+    return response.json()
