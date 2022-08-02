@@ -5,8 +5,8 @@ app = FastAPI()
 
 @app.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return {"message45": "Hello World"}
 
 @app.get("/welcome")
 async def validate(name: str = ""):
-    return {"message": "Welcome " + name}
+    return {"message222": "Welcome " + name}

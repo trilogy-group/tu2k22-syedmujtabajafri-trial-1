@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  server-1:
+    container_name: server-1
+    build: ./server1
+    working_dir: /app/src/server1
+    command: uvicorn main:app --host 0.0.0.0 --port 8080 --reload
+    depends_on:
+      - server-2
+    environment:
+      DEBUG: 1
+    volumes:
+      - ./server1:/app/src/server1
+    ports:
+      - 8080:8080
+    restart: on-failure
+  server-2:
+    container_name: server-2
+    build: ./server2
+    working_dir: /app/src/server2
+    command: uvicorn main:app --host 0.0.0.0 --port 8081 --reload
+    environment:
+      DEBUG: 1
+    volumes:
+      - ./server2:/app/src/server2
+    ports:
+      - 8081:8081
+    restart: on-failure
