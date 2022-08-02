@@ -1,0 +1,25 @@
+tasks:
+  - name: "script1"
+  - before: echo "Starting before script"
+    init: |
+      docker-compose up --build -d
+      gp sync-done bundle
+    command: echo "server1 script execution successful"
+  - name: "script2"
+  - init: gp sync-await bundle
+    command: >
+      curl localhost:8080/sum -d '{"a": 400, "b": 100}'
+    openMode: split-right
+    
+# List the ports to expose. Learn more https://www.gitpod.io/docs/config-ports/
+ports:
+  - name: server-1
+    port: 8080
+    onOpen: ignore
+  - name: server-2
+    port: 8081
+    onOpen: ignore
+
+vscode:
+  extensions:
+    - ms-python.python
