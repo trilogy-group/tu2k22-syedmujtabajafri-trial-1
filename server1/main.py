@@ -1,6 +1,11 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from pydantic import BaseModel
 
 app = FastAPI()
+
+class Item(BaseModel):
+    a: int
+    b: int
 
 
 @app.get("/")
@@ -10,3 +15,11 @@ async def root():
 @app.get("/welcome")
 async def validate(name: str = ""):
     return {"message222": "Welcome " + name}
+
+@app.post("/sum/")
+async def sum(item: Item):
+    print(item.a)
+    print(item.b)
+    return {
+        "sum": "1"
+    }
