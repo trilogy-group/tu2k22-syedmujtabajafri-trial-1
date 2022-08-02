@@ -5,13 +5,15 @@ tasks:
       docker-compose up --build -d
       gp sync-done bundle
     command: echo "server1 script execution successful"
+    openMode: split-right
+
   - name: "script2"
   - init: gp sync-await bundle
     command: >
-      curl localhost:8080/sum -d '{"a": 400, "b": 100}'
+      curl -XPOST -H "Content-type: application/json" -d '{"a": 30, "b": "12"}' 'http://localhost:8080/sum/'
+      echo "server2 script execution successful"
     openMode: split-right
     
-# List the ports to expose. Learn more https://www.gitpod.io/docs/config-ports/
 ports:
   - name: server-1
     port: 8080
