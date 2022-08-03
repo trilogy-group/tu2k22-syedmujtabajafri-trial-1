@@ -1,0 +1,26 @@
+tasks:
+  - name: "script1"
+  - before: echo "Starting before script"
+    init: |
+      docker-compose up --build -d
+      gp sync-done bundle
+    command: echo "server1 script execution successful"
+
+  - name: "script2"
+  - init: gp sync-await bundle
+    command: |
+      curl -XPOST -H "Content-type: application/json" -d '{"a": 30, "b": "12"}' 'http://localhost:8080/sum/'
+      echo "server2 script execution successful"
+    openMode: tab-after
+    
+ports:
+  - name: server-1
+    port: 8080
+    onOpen: ignore
+  - name: server-2
+    port: 8081
+    onOpen: ignore
+
+vscode:
+  extensions:
+    - ms-python.python
